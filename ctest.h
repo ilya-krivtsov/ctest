@@ -501,7 +501,8 @@ static void sighandler(int signum)
     const char msg_nocolor[] = "[SIGSEGV: Segmentation fault]\n";
 
     const char* msg = color_output ? msg_color : msg_nocolor;
-    write(STDOUT_FILENO, msg, (unsigned int)strlen(msg));
+    int written_bytes = write(STDOUT_FILENO, msg, (unsigned int)strlen(msg));
+    (void)written_bytes; // fix unused result warning
 
     /* "Unregister" the signal handler and send the signal back to the process
      * so it can terminate as expected */
